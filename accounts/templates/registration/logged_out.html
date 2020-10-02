@@ -1,0 +1,20 @@
+{% extends "index.html" %}{% block styles %}
+<style>
+    .row .col-12{
+        max-width: 500px;
+        margin: 0 auto;
+    }
+</style>
+{% endblock %}{% block page_content %}
+<div class="row mt-2">
+    <div class="col-12">
+        <h3 class="text-center">Logging out...</h3><br>
+    </div>
+</div>
+{% endblock %}{% block script %}
+<script>
+    $( () => {
+        window.location = "/login"
+    });
+</script>
+{% endblock %}

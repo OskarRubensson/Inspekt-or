@@ -1,0 +1,63 @@
+{% extends "index.html" %}{% block styles %}
+<style>
+</style>
+{% endblock %}{% block page_content %}
+<div class="row mt-2">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <h3 class="text-center">Welcome! Please sign up!</h3><br>
+
+        <form method="post">
+            {% csrf_token %}
+            <p>
+                <label for="id_username">Username:</label> 
+                {{form.username}}
+                <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+            </p>
+            <p>
+                <label for="id_username">First name:</label> 
+                <input type="text" name="id_first_name" maxlength="20" autocapitalize="none" autocomplete="firstname" autofocus="" required="" id="id_first_name" class="form-control"> 
+            </p>
+            <p>
+                <label for="id_username">Last name:</label> 
+                <input type="text" name="id_last_name" maxlength="20" autocapitalize="none" autocomplete="lastname" autofocus="" required="" id="id_last_name" class="form-control"> 
+                
+            </p>
+            <p>
+                <label for="id_password1">Password:</label> 
+                {{form.password1}}
+                <span class="helptext"></span>
+                </p>
+            <ul>
+                <li>Your password can’t be too similar to your other personal information.</li>
+                <li>Your password must contain at least 8 characters.</li>
+                <li>Your password can’t be a commonly used password.</li>
+                <li>Your password can’t be entirely numeric.</li>
+            </ul>
+            <p></p>
+            <p>
+                <label for="id_password2">Password confirmation:</label> 
+                {{form.password2}}
+                <span class="helptext">Enter the same password as before, for verification.</span>
+            </p>
+            <input class="btn btn-primary form-control" type="submit" value="Sign up">
+        </form>
+    </div>
+    <div class="col-4"></div>
+</div>
+
+<div class="row">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <a href="/login" class="btn" style="color: rgba(255, 255, 255, 0.7);">Already have an account? Click here to
+            login!</a>
+    </div>
+    <div class="col-4"></div>
+</div>
+{% endblock %}{% block script %}
+<script>
+    $(() => {
+        $('form input').addClass('form-control');
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends "index.html" %}{% block styles %}
+<style>
+    form .form-control {
+        border: none;
+        outline: none;
+    }
+
+    .orange-border {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 10px 5px;
+    }
+
+    div[name="defect"] {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    form .row {
+        padding: 20px 0;
+        margin: 0;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.3);
+    }
+
+    [name="defectsContainer"] .row {
+        justify-content: center;
+    }
+
+    form .row div {
+        padding: 5px;
+
+    }
+
+    form input,
+    form h4,
+    form h5 {
+        padding: 0 0 0 8px;
+    }
+
+    form div[contenteditable="True"],
+    form h3,
+    form input {
+        padding: 4px 5px;
+        border: 2px solid rgba(0, 0, 0, 0.3) !important;
+        border-radius: 5px;
+        line-height: 30px;
+    }
+
+    form h3 {
+        text-align: center;
+    }
+</style>
+{% endblock %}{% block page_content %}
+<form id="protocolForm" action="javascript:saveProtocol();">
+    <div class="orange-border mt-5">
+        <div class="row">
+            <div class="col col-3" style="text-transform: capitalize;">
+                {{ res.user }}
+            </div>
+            <div class="col col-6">
+                <h3 contenteditable="True" id="protocolName">
+                    {% if res.protocols.0.name %}{{res.protocols.0.name}}{% else %}Protocol name..
+                    {% endif %}</h3>
+            </div>
+            <div class="col col-3">
+                <div contenteditable="True" id="protocolLocation">{{res.protocols.0.location}}</div>
+                <input class="form-control mt-1" id="protocolDate" type="date" placeholder="Date.."
+                    style="color: white;" value="{{res.protocols.0.date}}">
+            </div>
+        </div>
+        <div id="objectsContainer" style="position: relative;">
+        </div>
+        <div class="row" style="background-color: transparent; border: none;">
+            <div class="col-2">
+                <button type="button" class="btn btn-sm btn-success" onclick="addObjFromJSON()"><i
+                        class="fas fa-plus-circle"></i>
+                    Add Object</button>
+            </div>
+            <div class="col-8" style="text-align: center;">
+                <button type="submit" class="btn btn-sm btn-primary w-75"><i class="fas fa-check"></i>
+                    Save</button>
+            </div>
+            <div class="col-2">
+
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+<script>
+    var pid = "{{pid}}"
+    $(function () {
+        try {
+            var result = JSON.parse("{{res}}".replace(/&#x27;/g, '"'))
+            loadJSON(result);
+        } catch{ }
+        $('#objectsContainer').sortable({
+            animation: 200,  // ms, animation speed moving items when sorting, `0` — without animation
+            easing: "cubic-bezier(1, 0, 0, 1)", // Easing for animation. Defaults to null. See https://easings.net/ for examples.
+        });
+    })
+
+    function deleteDef(Def) {
+        var defect = $(Def).parent();
+        console.log(defect)
+        defect.remove();
+    }
+
+    function deleteObj(obj) {
+        var object = $(obj).parent();
+        object.remove();
+    }
+
+    function loadJSON(data) {
+        $('#protocolName').text(data.name)
+        $('#protocolDate').val(data.date)
+        $('#protocolLocation').text(data.location)
+
+        for (o in data.objects) {
+            var object = data.objects[o]
+            var $object = addObjFromJSON(object)
+
+            for (d in object.defects) {
+                var defect = object.defects[d]
+                addDefFromJSON($object, defect)
+
+            }
+        }
+    }
+
+    function addObjFromJSON(object = "") {
+        var name = "";
+        var id = Date.now()
+        if (object != "") {
+            name = object.name;
+            id = object.id;
+        }
+        var $object = $('<div class="row" draggable="true" name="object" style="position: relative;"><div class="col-3"><label for="">Object</label><br><div contenteditable="True">' + name + '</div></div><div class="col-3"><label>&nbsp;</label><br><button type="button" class="btn btn-sm btn-success" onclick="addDefFromJSON(this)"><i class="fas fa-plus-circle"></i> Add Defect</button></div><div id="defectsContainer_' + id + '" name="defectsContainer" class="col-12"></div><i class="fas fa-times" style="position: absolute; right: 10px; top: 10px; cursor: pointer;"onclick="deleteObj(this)"><i></div>')
+        $("#objectsContainer").append($object)
+        return $object;
+    }
+
+    function addDefFromJSON($object, defect = "") {
+        var id = Date.now();
+        var name = "";
+        var severity = "A";
+        var description = "";
+
+        if (defect != "") {
+            id = defect.id;
+            name = defect.name;
+            severity = defect.severity;
+            description = defect.description;
+            $object = $object.find('div[name="defectsContainer"]')
+        } else {
+            $object = $($object).parent().parent().find('div[name="defectsContainer"]');
+        }
+
+        var $defect = $('<div class="row col-12" id="defect_' + id + '" name="defect"><div class="col-3 "><label for="">Defect</label><br><div contenteditable="True">' + name + '</div><div class="col-3"></div></div><div class="col-1 "><label for="">Severity</label><br><span>A</span> <input type="radio" name="severityRadio_' + id + '" value="A" ' + (severity == "A" ? 'checked' : '') + '><br><span>B</span> <input type="radio" name="severityRadio_' + id + '" value="B" ' + (severity == "B" ? 'checked' : '') + '><br><span>C</span> <input type="radio" name="severityRadio_' + id + '" value="C" ' + (severity == "C" ? 'checked' : '') + '><br></div><div class="col-3 "><label for="">Description</label><br><div contenteditable="True">' + description + '</div></div><i class="fas fa-times" style="position: absolute; right: 10px; top: 10px; cursor: pointer;" onclick="deleteDef(this)"></i></div>')
+        $object.append($defect)
+    }
+
+    function saveProtocol() {
+        var json = {
+            "name": $('#protocolName').text(),
+            "location": $('#protocolLocation').text(),
+            "date": $('#protocolDate').val(),
+            "objects": []
+        };
+        $('#protocolForm div[name="object"]').each(function () {
+            //var oid = $(this).id;
+            var defects = []
+            $(this).find('div[name="defect"]').each(function () {
+                defects.push({
+                    "name": $(this).find('div[contenteditable="True"]').first().text(),
+                    "severity": $(this).find('input[type="radio"]:checked').val(),
+                    "description": $(this).find('div[contenteditable="True"]').last().text()
+                })
+            })
+            json.objects.push({
+                "name": $(this).find('div[contenteditable="True"]').first().text(),
+                "defects": defects
+            })
+        });
+        $.get('submitprotocol/', { "protocol": JSON.stringify(json), "old_pid": pid }, (data) => {
+            console.log(data)
+            window.location.replace("/protocols")
+        })
+    }
+</script>
+{% endblock %}

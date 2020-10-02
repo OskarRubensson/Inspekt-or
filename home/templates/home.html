@@ -1,0 +1,45 @@
+{% extends "index.html" %}{% block styles %}
+<style>
+    .col-border{
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        min-height: 200px;
+    }
+
+    .row p{
+        font-size: 1.2rem;
+    }
+
+</style>
+{% endblock %}{% block page_content %}
+<div class="row">
+    <div class="col-4">
+        <h3 style="text-transform: capitalize;">Välkommen {{user}}!</h3>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col-3">
+        <div class="col-12 col-border">
+            <p class=" border-bottom">This year</p>
+            
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="col-12 col-border">
+            <p class=" border-bottom">This month</p>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="col-12 col-border">
+            <p class=" border-bottom">This week</p>
+        </div>
+    </div>
+    <div class="col-3">
+        <div class="col-12 col-border">
+            <p class ="border-bottom">Today</p>
+        </div>
+    </div>
+</div>
+{% endblock %}{% block script %}
+<script>
+</script>
+{% endblock %}
