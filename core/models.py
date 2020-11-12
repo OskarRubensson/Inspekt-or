@@ -54,7 +54,7 @@ class Users(models.Model):
         result = json.loads(json.dumps(jsonstring))
         return result
     
-    def disableProtocol(self, user, pid):
+    def disableProtocol(user, pid):
         protocol = Protocols.objects.get(id=pid)
         protocol.active = 0
         protocol.save()

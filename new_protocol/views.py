@@ -30,7 +30,7 @@ def submitProtocol(request):
     old_pid = request.GET.get('old_pid', '0')
 
     if old_pid != '0' and old_pid != 0:
-        Users.disableProtocol(request.user, request.user, old_pid)
+        Users.disableProtocol(request.user, old_pid)
     
     if request.user != 0:
         protocol = Protocols(name=p['name'], location=p['location'], date=p['date'], user=request.user)
