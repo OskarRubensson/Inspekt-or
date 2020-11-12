@@ -31,7 +31,10 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = '96-!r+p7lhuzfc7uz3l4bjc21i!0p--n8s)=#!yt!kx&4(n0kn'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+if 'DYNO' in os.environ:
+    DEBUG = False
+else:
+    DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -158,4 +161,5 @@ LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'home'
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+if 'DYNO' in os.environ:
+    django_heroku.settings(locals())
