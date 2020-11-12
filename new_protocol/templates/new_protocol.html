@@ -53,6 +53,18 @@
         color: grey;
         display: inline-block;
     }
+
+    .errorMsg{
+        width: 100%;
+        height: 50px;
+        display: flex;
+        vertical-align: center;
+        justify-content: center;
+
+        background: rgba(255, 0, 0, 0.6);
+        border-radius: 5px;
+    }
+
 </style>
 {% endblock %}{% block page_content %}
 <form id="protocolForm" action="javascript:saveProtocol();">
@@ -93,6 +105,8 @@
         </div>
     </div>
 </form>
+
+<div class="errorMsg mt-2" style="display: none;"><h5 style="align-self: center;"></h5></div>
 
 {% endblock %}{% block script %}
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
@@ -182,34 +196,49 @@
     }
 
     function saveProtocol() {
-        var json = {
-            "name": $('#protocolName').text(),
-            "location": $('#protocolLocation').text(),
-            "date": $('#protocolDate').val(),
-            "objects": []
-        };
-            //Loop through all objects
-        $('#protocolForm div[name="object"]').each(function () {
-            //var oid = $(this).id;
-                //Adding all defects (name, severity, description) to an array
-            var defects = []
-            $(this).find('div[name="defect"]').each(function () {
-                defects.push({
-                    "name": $(this).find('div[contenteditable="True"]').first().text(),
-                    "severity": $(this).find('input[type="radio"]:checked').val(),
-                    "description": $(this).find('div[contenteditable="True"]').last().text()
+        try{
+            var json = {
+                "name": $('#protocolName').text(),
+                "location": $('#protocolLocation').text(),
+                "date": $('#protocolDate').val(),
+                "objects": []
+            };
+            
+                //Errorhandling
+            if( $('#protocolName').text() == "" )       throw "#protocolName"
+            if( $('#protocolLocation').text() == "" )   throw "#protocolLocation"
+            if( $('#protocolDate').val() == "" )        throw "#protocolDate"
+
+                //Loop through all objects
+            $('#protocolForm div[name="object"]').each(function () {
+
+                    //Adding all defects (name, severity, description) to an array
+                var defects = []
+                $(this).find('div[name="defect"]').each(function () {
+                    defects.push({
+                        "name": $(this).find('div[contenteditable="True"]').first().text(),
+                        "severity": $(this).find('input[type="radio"]:checked').val(),
+                        "description": $(this).find('div[contenteditable="True"]').last().text()
+                    })
                 })
-            })
-                //Add object name and all of its defects
-            json.objects.push({
-                "name": $(this).find('div[contenteditable="True"]').first().text(),
-                "defects": defects
-            })
-        });
-        $.get('submitprotocol/', { "protocol": JSON.stringify(json), "old_pid": pid }, (data) => {
-            console.log(data)
-            window.location.replace("/protocols")
-        })
+                    //Add object name and all of its defects
+                json.objects.push({
+                    "name": $(this).find('div[contenteditable="True"]').first().text(),
+                    "defects": defects
+                })
+            });
+
+            $.get('submitprotocol/', { "protocol": JSON.stringify(json), "old_pid": pid }, (data) => {
+                window.location.replace("/protocols")
+            })       
+        }
+        catch (errObj){
+            $('.errorMsg').animate({
+                opacity: "show"
+            }, 300);
+            $('.errorMsg h5').html('Could not save! Please enter a value in the red box.')
+            $(errObj).addClass("border-red")
+        }
     }
 </script>
 {% endblock %}
