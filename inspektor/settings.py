@@ -132,9 +132,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+STATIC_ROOT = os.path.dirname(os.path.realpath(__file__)) + '/static'
 STATICFILES_DIRS = (
-  os.path.join(SITE_ROOT, 'static/'),
+    os.path.join(BASE_DIR, 'static/'),
 )
 
 LOGIN_URL = 'login'

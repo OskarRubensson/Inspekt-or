@@ -1,0 +1,73 @@
+html{
+    background: rgb(51,51,51);
+    background: linear-gradient(333deg, rgba(51,51,51,1) 0%, rgba(18,18,18,1) 100%);
+}
+
+body{
+    background: transparent !important;
+}
+html, body{
+    min-height: 100%;
+    color: white !important;
+    min-width: 600px;
+}
+
+header{
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5px 30px;
+}
+
+footer{
+    min-height: 200px; 
+}
+
+.a-white{
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.a-white:focus, a:hover{
+    color: white !important;
+    text-decoration: none !important;
+}
+
+.navbar-dark{
+    background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+table td, table th{
+    color: white !important;
+}
+
+.table-dark{
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+table tbody td{
+    font-size: 0.9rem !important;
+}
+
+.form-control{
+    background-color: transparent !important;
+    outline: 1px solid rgba(0, 0, 0, 0.2);
+    color: white !important;
+}
+
+.btn{
+    margin: 3px 0;
+    font-weight: bold;
+}
+
+.earthcolor{
+    color: #e1a95f;
+}
+
+.border-bottom{
+    border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+
+.orange-border{
+    border: 2px solid #e1a95f;
+    border-radius: 5px;
+}
