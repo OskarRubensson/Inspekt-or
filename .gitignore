@@ -1,0 +1,5 @@
+.env
+staticfiles/
+requirements.txt
+Procfile
+*.sqlite3
