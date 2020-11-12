@@ -79,10 +79,10 @@
                 {{ request.user.first_name }} {{ request.user.last_name }}
             </div>
             <div class="col col-6">
-                <h3 contenteditable id="protocolName" data-placeholder="Protocol name...">{{res.protocols.0.name}}</h3>
+                <h3 contenteditable="True" id="protocolName" data-placeholder="Protocol name...">{{res.protocols.0.name}}</h3>
             </div>
             <div class="col col-3">
-                <div contenteditable id="protocolLocation">{{res.protocols.0.location}}</div>
+                <div contenteditable="True" id="protocolLocation">{{res.protocols.0.location}}</div>
                 <input class="form-control mt-1" id="protocolDate" type="date"
                     style="color: white;" value="{{res.protocols.0.date}}">
             </div>
