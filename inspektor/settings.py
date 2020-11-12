@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from django.conf import settings
 import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -92,6 +93,8 @@ DATABASES = {
         'PORT': '3306'
     }
 }
+
+DATABASES['default'] =  dj_database_url.config()
 
 
 #"""'ENGINE': 'django.db.backends.sqlite3',
