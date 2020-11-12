@@ -26,7 +26,7 @@ class Users(models.Model):
         protocols = Protocols.objects.filter(user=user).exclude(active=0).values()
         return protocols
     
-    def getProtocol(self, user, pid):
+    def getProtocol(user, pid):
         
         jsonstring = '{"user":"' + user.username + '",'
         protocol = user.protocols_set.get(id=pid)
@@ -35,13 +35,13 @@ class Users(models.Model):
         jsonstring += '"id":"' + str(protocol.id) + '",' 
         jsonstring += '"date":"' + protocol.date.strftime("%Y-%m-%d") + '",'
         jsonstring += '"location":"' + protocol.location + '",' 
-        jsonstring += '"objects":['
+        jsonstring += '"objects":[ '
         
         for objects in protocol.objects_set.all():
 
             jsonstring += '{"name":"' + objects.name + '",'
             jsonstring += '"id":"' + str(objects.id) + '",'
-            jsonstring += '"defects":['
+            jsonstring += '"defects":[ '
             for defects in objects.defects_set.all():
                 jsonstring += '{"name":"' + defects.name + '",'
                 jsonstring += '"id":"' + str(defects.id) + '",'

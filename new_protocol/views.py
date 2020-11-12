@@ -14,7 +14,7 @@ def newView(request):
             "user": request.user
         }
     else: 
-        res = json.loads(Users.getProtocol(request.user.id, request.user, id))
+        res = json.loads(Users.getProtocol(request.user, id))
     return render(request, 'new_protocol.html', {"res": res, "pid": id})
 
 def editView(request):
