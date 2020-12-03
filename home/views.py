@@ -4,4 +4,4 @@ from django.shortcuts import render, redirect
 def home(request, id=1):
     if not request.user.is_authenticated:
         return redirect("/login")
-    return render(request, 'home.html', {'user': request.user.get_username()})
+    return render(request, 'home.html', {'user': request.user.get_short_name()})

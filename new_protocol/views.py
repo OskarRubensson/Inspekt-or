@@ -6,7 +6,7 @@ from core.models import Users, Protocols, Objects, Defects
 # Create your views here.
 def newView(request):
     if not request.user.is_authenticated:
-        return redirect("/accounts/login")
+        return redirect("/login")
 
     id = request.GET.get('id', '0')
     if id == 0 or id == '0':
@@ -19,7 +19,7 @@ def newView(request):
 
 def editView(request):
     if not request.user.is_authenticated:
-        return redirect("/accounts/login")
+        return redirect("/login")
 
     id = request.GET.get('id', '0')
     result = json.loads(Users.getProtocol(request.user, id))
