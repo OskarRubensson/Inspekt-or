@@ -42,7 +42,7 @@ ALLOWED_HOSTS = ['*']
 # User substitution
 # https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#auth-custom-user
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'userInfo.User'
 
 # Application definition
 
@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'home',
     'protocols',
     'new_protocol',
-    'accounts'
+    'userInfo'
 ]
 
 MIDDLEWARE = [
