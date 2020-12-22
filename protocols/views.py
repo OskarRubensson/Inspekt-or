@@ -6,7 +6,7 @@ import json
 # Create your views here.
 def protocolsView(request):
     if not request.user.is_authenticated:
-        return redirect("/accounts/login")
+        return redirect("/login")
     
     data = getProtocols(request.user)
     return render(request, 'protocols.html', {"res": data})

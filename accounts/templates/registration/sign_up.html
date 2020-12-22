@@ -1,25 +1,44 @@
 {% extends "index.html" %}{% block styles %}
 <style>
+    form li{
+        color: #969696;
+    }
 </style>
 {% endblock %}{% block page_content %}
 <div class="row mt-2">
     <div class="col-4"></div>
-    <div class="col-4">
+    <div class="col-4 pt-3">
         <h3 class="text-center">Welcome! Please sign up!</h3><br>
-
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+              <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                  <p style="color:  #969696">{{ field.help_text }}</p>
+                {% endif %}
+                {% for error in field.errors %}
+                  <p style="color: #cc7676">{{ error }}</p>
+                {% endfor %}
+              </p>
+            {% endfor %}
+            <button class="btn btn-primary form-control" type="submit">Sign up</button>
+          </form>
+        <!----THIS IS AN OLD FORM
         <form method="post">
             {% csrf_token %}
             <p>
-                <label for="id_username">Username:</label> 
-                {{form.username}}
-                <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span>
+                <label for="id_email">Email:</label>
+                <input type="email" name="id_email" maxlength="100" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" class="form-control"> 
+                <span class="helptext"></span>
             </p>
             <p>
-                <label for="id_username">First name:</label> 
+                <label for="id_first_name">First name:</label> 
                 <input type="text" name="id_first_name" maxlength="20" autocapitalize="none" autocomplete="firstname" autofocus="" required="" id="id_first_name" class="form-control"> 
             </p>
             <p>
-                <label for="id_username">Last name:</label> 
+                <label for="id_last_name">Last name:</label> 
                 <input type="text" name="id_last_name" maxlength="20" autocapitalize="none" autocomplete="lastname" autofocus="" required="" id="id_last_name" class="form-control"> 
                 
             </p>
@@ -42,6 +61,7 @@
             </p>
             <input class="btn btn-primary form-control" type="submit" value="Sign up">
         </form>
+        -->
     </div>
     <div class="col-4"></div>
 </div>

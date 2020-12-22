@@ -12,14 +12,25 @@
     </div>
     <table class="table table-dark table-hover table-striped" id="protocolsList">
         <thead>
-
+            
+            {% if p %}
             <th hidden>ID</th>
             <th>Name</th>
             <th>Created at</th>
             <th>Location</th>
             <th><i class="fas fa-ellipsis-h"></i></th>
+            {% endif %}
         </thead>
         <tbody>
+
+            {% if not p %}
+            <tr>
+                <td colspan="4" class="text-center" style="font-size: 1.2rem !important">
+                    <a href="/new" class="a-white" style="color: #d8d8d8 !important;">You have no protocols - Create one!</a> 
+                </td>
+            </tr>
+            {% else %}
+
             {% for p in res %}
             <tr id="protocol_{{p.id}}">
                 <td> {{ p.name }} </td>
@@ -32,6 +43,7 @@
             </tr>
 
             {% endfor %}
+            {% endif %}
         </tbody>
     </table>
 </div>
