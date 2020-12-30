@@ -1,5 +1,5 @@
 from django.db import models
-from userInfo.models import User
+from accounts.models import User
 import json
 
 # Create your models here.
