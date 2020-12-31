@@ -78,12 +78,14 @@
                 {{ request.user.first_name }} {{ request.user.last_name }}
             </div>
             <div class="col col-6">
-                <h3 contenteditable="True" id="protocolName" data-placeholder="Protocol name">{{res.protocols.0.name}}
+                <h3 contenteditable="True" id="protocolName" data-placeholder="Protocol name">
+                    {{res.protocols.0.name}}
                 </h3>
             </div>
             <div class="col col-3">
                 <div contenteditable="True" id="protocolLocation" data-placeholder="Location">
-                    {{res.protocols.0.location}}</div>
+                    {{res.protocols.0.location}}
+                </div>
                 <input class="form-control mt-1" id="protocolDate" type="date" style="color: white;"
                     value="{{res.protocols.0.date}}">
             </div>
@@ -130,10 +132,21 @@
         $('#spinner').hide();
         $('#protocolWrapper').show();
 
+            //Add placeholders
+        $("[contenteditable]").each(function () {
+            var $element = $(this);
+            if ($element.html().length && !$element.text().trim().length) {
+                $element.empty();
+                console.log($element);
+            }
+        });
+
+            //Add placeholders when we drop focus
         $("[contenteditable]").blur(function () {
             var $element = $(this);
             if ($element.html().length && !$element.text().trim().length) {
                 $element.empty();
+                console.log($element);
             }
         });
     })

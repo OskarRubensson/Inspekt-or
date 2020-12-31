@@ -14,7 +14,7 @@ class Users(models.Model):
     
     def getProtocol(user, pid):
         
-        jsonstring = '{"user":"' + user.username + '",'
+        jsonstring = '{"user":"' + user.email + '",'
         protocol = user.protocols_set.get(id=pid)
 
         jsonstring += '"name":"' + protocol.name + '",' 
