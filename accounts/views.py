@@ -14,12 +14,11 @@ def sign_up(request):
         user = form.save()
         email = form.cleaned_data.get('email')
         password = form.cleaned_data.get('password1')
-        #user = authenticate(email=email, password=password)
+        user = authenticate(email=email, password=password)
         login(request, user)
         return redirect('home')
     else:
-        pass
-        #form = SignUpForm()
+        form = SignUpForm()
     return render(request,'registration/sign_up.html', {'form': form})
 
 def log_out(request):

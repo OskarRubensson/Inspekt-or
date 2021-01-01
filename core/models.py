@@ -52,6 +52,8 @@ class Protocols(models.Model):
     location = models.CharField(max_length=30)
     name = models.CharField(max_length=30)
     date = models.DateField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     active = models.IntegerField(default=1)
 

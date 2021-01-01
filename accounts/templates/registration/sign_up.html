@@ -9,7 +9,7 @@
     <div class="col-4"></div>
     <div class="col-4 pt-3">
         <h3 class="text-center">Welcome! Please sign up!</h3><br>
-        <form method="post">
+        <form method="post" id="loginForm">
             {% csrf_token %}
             {% for field in form %}
               <p>
@@ -25,43 +25,6 @@
             {% endfor %}
             <button class="btn btn-primary form-control" type="submit">Sign up</button>
           </form>
-        <!----THIS IS AN OLD FORM
-        <form method="post">
-            {% csrf_token %}
-            <p>
-                <label for="id_email">Email:</label>
-                <input type="email" name="id_email" maxlength="100" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email" class="form-control"> 
-                <span class="helptext"></span>
-            </p>
-            <p>
-                <label for="id_first_name">First name:</label> 
-                <input type="text" name="id_first_name" maxlength="20" autocapitalize="none" autocomplete="firstname" autofocus="" required="" id="id_first_name" class="form-control"> 
-            </p>
-            <p>
-                <label for="id_last_name">Last name:</label> 
-                <input type="text" name="id_last_name" maxlength="20" autocapitalize="none" autocomplete="lastname" autofocus="" required="" id="id_last_name" class="form-control"> 
-                
-            </p>
-            <p>
-                <label for="id_password1">Password:</label> 
-                {{form.password1}}
-                <span class="helptext"></span>
-                </p>
-            <ul>
-                <li>Your password can’t be too similar to your other personal information.</li>
-                <li>Your password must contain at least 8 characters.</li>
-                <li>Your password can’t be a commonly used password.</li>
-                <li>Your password can’t be entirely numeric.</li>
-            </ul>
-            <p></p>
-            <p>
-                <label for="id_password2">Password confirmation:</label> 
-                {{form.password2}}
-                <span class="helptext">Enter the same password as before, for verification.</span>
-            </p>
-            <input class="btn btn-primary form-control" type="submit" value="Sign up">
-        </form>
-        -->
     </div>
     <div class="col-4"></div>
 </div>
